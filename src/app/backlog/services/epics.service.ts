@@ -10,7 +10,8 @@ import {environment} from "../../../environments/environment";
 })
 export class EpicsService {
   basePath: string = //`${environment.serverBasePath}`;
-  'https://my-json-server.typicode.com/JohnArvlo/db-backlog';
+  //'https://my-json-server.typicode.com/JohnArvlo/db-backlog';
+  'http://localhost:8090/api/v1';
   resourceEndpoint: string = '/epics';
 
   httpOptions = {

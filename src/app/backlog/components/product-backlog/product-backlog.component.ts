@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { CommonModule } from '@angular/common';
+import {CommonModule, formatDate} from '@angular/common';
 import { TranslateModule } from "@ngx-translate/core";
 
 import { UserStory } from "../../model/user-story.entity";
@@ -28,7 +28,7 @@ export class ProductBacklogComponent {
   usersprints: Array<UserStory> = [];
 
   sprints: Array<Sprint> = [];
-  newSprint: Sprint = new Sprint(0, '', '', 'Active', new Date(), new Date());
+  newSprint: Sprint = new Sprint(0, '', '', 'STARTED', new Date(), new Date());
 
   constructor(private userStoriesService: UserStoriesService,
               private sprintsService: SprintService) {}
@@ -37,8 +37,7 @@ export class ProductBacklogComponent {
   private getAllUserStories(): void {
     this.userStoriesService.getAll()
       .subscribe((response: any) => {
-        this.productBacklog = response.filter((story: UserStory) => story.sprintBacklogId == null);
-        //this.sprintBacklog = response.filter((story: UserStory) => story.sprintBacklogId != null);
+        this.productBacklog = response.filter((story: UserStory) => story.sprintId == 0);
         this.usersprints = response;
       });
   }
@@ -53,11 +52,25 @@ export class ProductBacklogComponent {
 
   // Metodo para crear un nuevo Sprint
   createSprint(): void {
+
+    const formattedSprint = {
+      ...this.newSprint,
+      startDate: formatDate(this.newSprint.startDate, 'yyyy-MM-ddTHH:mm:ss.SSSZ', 'en-US'),
+      endDate: formatDate(this.newSprint.endDate, 'yyyy-MM-ddTHH:mm:ss.SSSZ', 'en-US')
+    };
+
     this.sprintsService.create(this.newSprint).subscribe((sprint: Sprint) => {
       console.log('Sprint creado:', sprint);
       this.sprintBacklog.forEach(userStory => {
-        userStory.sprintBacklogId = sprint.id;
-        this.userStoriesService.update(userStory.id, userStory).subscribe(
+        userStory.sprintId = sprint.id;
+        const updatedUserStory = {
+          title: userStory.title,
+          description: userStory.description,
+          epicId: userStory.epicId,
+          sprintId: sprint.id,
+          effort: userStory.effort
+        };
+        this.userStoriesService.update(userStory.id, updatedUserStory).subscribe(
           (updatedUserStory: UserStory) => {
             console.log('User story actualizada:', updatedUserStory);
           },
@@ -66,7 +79,7 @@ export class ProductBacklogComponent {
           }
         );
       });
-      this.resetSprintForm(); // Restablecer el formulario después de crear el sprint
+    this.resetSprintForm(); // Restablecer el formulario después de crear el sprint
       this.getAllSprints();
     }, (error) => {
       console.error('Error al crear el sprint:', error);
@@ -75,7 +88,7 @@ export class ProductBacklogComponent {
 
   // Metodo para restablecer el formulario
   private resetSprintForm(): void {
-    this.newSprint = new Sprint(0, '', '', 'Active', new Date(), new Date());
+    this.newSprint = new Sprint(0, '', '', 'STARTED', new Date(), new Date());
   }
 
 
@@ -96,11 +109,16 @@ export class ProductBacklogComponent {
   }
 
   closeSprint(sprint: Sprint) {
-    sprint.status = 'Closed';
+    sprint.status = 'FINISHED';
+    const formattedSprint = {
+      ...sprint,
+      startDate: formatDate(sprint.startDate, 'yyyy-MM-ddTHH:mm:ss.SSSZ', 'en-US'),
+      endDate: formatDate(sprint.endDate, 'yyyy-MM-ddTHH:mm:ss.SSSZ', 'en-US')
+    };
     this.sprintsService.update(sprint.id, sprint).subscribe(
       (updatedSprint: Sprint) => {
         console.log('Sprint actualizado:', updatedSprint);
-        this.sprintBacklog = this.sprintBacklog.filter(userStory => userStory.sprintBacklogId !== sprint.id);
+        this.sprintBacklog = this.sprintBacklog.filter(userStory => userStory.sprintId !== sprint.id);
       },
       (error) => {
         console.error('Error al actualizar el sprint:', error);
@@ -109,7 +127,7 @@ export class ProductBacklogComponent {
   }
 
   isSprintActive(): boolean {
-    if (this.sprints.find(sprint => sprint.status === 'Active')) {
+    if (this.sprints.find(sprint => sprint.status === 'STARTED')) {
       return true;
     }
     return false;

@@ -14,7 +14,7 @@
 
 <!--Parte sprint actual-->
 <div *ngFor="let sprint of sprints" >
-  <mat-card *ngIf="sprint.status==='Active'" id="sprint-card">
+  <mat-card *ngIf="sprint.status==='STARTED'" id="sprint-card">
     <div class="sprint-header">
       <h6>Sprint #{{sprint.id}}</h6> <br>
       <h6>{{sprint.title}}</h6>
@@ -23,7 +23,7 @@
       <button class="sprint-button" mat-raised-button (click)="closeSprint(sprint)">Close Sprint</button>
     </div>
     <div *ngFor="let userStory of usersprints">
-      <mat-card *ngIf="userStory.sprintBacklogId===sprint.id" class="us-card">
+      <mat-card *ngIf="userStory.sprintId===sprint.id" class="us-card">
         <div class="us-container">
           <span>US{{ userStory.id }}</span>
           <span>{{ userStory.title }}</span>

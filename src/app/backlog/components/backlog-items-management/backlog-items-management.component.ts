@@ -54,12 +54,6 @@ export class BacklogItemsManagementComponent {
       });
   }
 
-  // Metodo para obtener las tareas de una historia de usuario específica
-  getTasksByUserStoryId(userStoryId: number): Task[] {
-    return this.tasks.filter(task => task.userStoryId === userStoryId);
-  }
-
-
   /*private getAllTasks(): void {
     this.tasksService.getAll()
       .subscribe((response: any) => {
@@ -121,10 +115,12 @@ export class BacklogItemsManagementComponent {
     });
   }
 
+
   // Tareas: agregar y editar
-  openAddTaskForm(): void {
+  openAddTaskForm(us: UserStory): void {
     const dialogRef = this.dialog.open(TaskCreateAndEditComponent, {
-      width: '400px'
+      width: '400px',
+      data: us
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -133,14 +129,14 @@ export class BacklogItemsManagementComponent {
     });
   }
 
-  openEditTaskForm(task: Task): void {
+  openEditTaskForm(task: Task, us:UserStory): void {
     const dialogRef = this.dialog.open(TaskCreateAndEditComponent, {
       width: '400px',
-      data: task  // Pasamos la tarea actual para editarla
+      data: {task, us}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.getAllUserStories();  // Recargamos la lista de tareas
+        this.getAllUserStories();
       }
     });
   }
@@ -179,8 +175,8 @@ export class BacklogItemsManagementComponent {
   }
 
 
-  onDeleteTask(element: Task) {
-    this.deleteTask(element.userStoryId, element.id);
+  onDeleteTask(usId: number, element: Task) {
+    this.deleteTask(usId, element.taskId);
   }
 
   //mostrar us, epic o task dependiendo de vista

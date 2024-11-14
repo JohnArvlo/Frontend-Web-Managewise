@@ -8,8 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { Task } from "../../model/task.entity";
 
-import {TasksService} from "../../services/tasks.service";
 import {UserStoriesService} from "../../services/user-stories.service";
+import {UserStory} from "../../model/user-story.entity";
 
 @Component({
   selector: 'app-task-create-and-edit',
@@ -20,26 +20,27 @@ import {UserStoriesService} from "../../services/user-stories.service";
 })
 export class TaskCreateAndEditComponent {
   newTask: Task;
+  newUserStory: UserStory;
 
   constructor(
-    private taskService: TasksService,
     private userStoryService: UserStoriesService,
     private dialog: MatDialog,
     private dialogRef: MatDialogRef<TaskCreateAndEditComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Task
+    @Inject(MAT_DIALOG_DATA) public data: { task: Task, userStory: UserStory }
   ) {
-    this.newTask = data ? { ...data } : new Task(0, '', '', 'to_do', 0);
+    this.newTask = data.task ? { ...data.task } : new Task(0, '', '', 'TO_DO', 0);
+    this.newUserStory = data.userStory;
   }
 
   onSubmit(): void {
-    if (this.newTask.id) {
-      this.userStoryService.updateTask(this.newTask.userStoryId, this.newTask.id, this.newTask).subscribe(() => {
+    if (this.newTask.taskId) {
+      this.userStoryService.updateTask(this.newUserStory.id, this.newTask.taskId, this.newTask).subscribe(() => {
         this.dialogRef.close(true);
       }, error => {
         console.error("Error al actualizar la tarea", error);
       });
     } else {
-      this.userStoryService.addTask(this.newTask.userStoryId, this.newTask).subscribe(() => {
+      this.userStoryService.addTask(this.newUserStory.id, this.newTask).subscribe(() => {
         this.dialogRef.close(true);
       }, error => {
         console.error("Error al agregar la tarea", error);
