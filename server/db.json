@@ -1,5 +1,5 @@
 {
-  "sprintbacklog": [
+  "sprints": [
     {
       "id": 1,
       "title": "Sprint 1",
@@ -10,27 +10,19 @@
     },
     {
       "id": 2,
-      "title": "Sprint 2",
-      "goal": "Integración con APIs externas",
-      "startDate": "2024-10-16",
-      "endDate": "2024-10-30",
-      "status": "ended"
+      "title": "spritnt",
+      "goal": "desaff",
+      "status": "Closed",
+      "startDate": "2024-12-21",
+      "endDate": "2024-12-25"
     },
     {
       "id": 3,
-      "title": "Sprint 3",
-      "goal": "Mejoras de rendimiento y optimización",
-      "startDate": "2024-10-31",
-      "endDate": "2024-11-15",
-      "status": "not_started"
-    },
-    {
-      "id": 4,
-      "title": "Sprint 4",
-      "goal": "Implementación de funcionalidades sociales",
-      "startDate": "2024-11-16",
-      "endDate": "2024-11-30",
-      "status": "not_started"
+      "title": "sdasd",
+      "goal": "asdasds",
+      "status": "Active",
+      "startDate": "1111-11-11",
+      "endDate": "2222-02-22"
     }
   ],
   "userStories": [
@@ -40,7 +32,7 @@
       "description": "Necesito un formulario de registro para crear una cuenta en la aplicación.",
       "status": "to_do",
       "epicId": 1,
-      "sprintBacklogId": 1,
+      "sprintBacklogId": null,
       "effort": 5,
       "tasks": [
         {
@@ -63,12 +55,12 @@
     },
     {
       "id": 2,
-      "title": "Como usuario, quiero iniciar sesión en la aplicación",
+      "title": "asdasdasd",
       "description": "Necesito un formulario de inicio de sesión para acceder a mi cuenta.",
       "status": "in_progress",
       "epicId": 1,
-      "sprintBacklogId": 1,
-      "effort": 3,
+      "sprintBacklogId": 2,
+      "effort": "3",
       "tasks": [
         {
           "id": 3,
@@ -89,40 +81,13 @@
       ]
     },
     {
-      "id": 3,
-      "title": "Como usuario, quiero recuperar mi contraseña",
-      "description": "Necesito un sistema para poder recuperar mi contraseña en caso de olvidarla.",
-      "status": "to_do",
-      "epicId": 2,
-      "sprintBacklogId": 2,
-      "effort": 4,
-      "tasks": [
-        {
-          "id": 5,
-          "title": "Diseñar el flujo de recuperación de contraseña",
-          "description": "Crear el diseño y flujo de la funcionalidad de recuperación de contraseña.",
-          "status": "to_do",
-          "estimation": 3,
-          "userStoryId": 3
-        },
-        {
-          "id": 6,
-          "title": "Implementar lógica de recuperación de contraseña",
-          "description": "Desarrollar la lógica del backend para la recuperación de contraseña.",
-          "status": "to_do",
-          "estimation": 4,
-          "userStoryId": 3
-        }
-      ]
-    },
-    {
       "id": 4,
-      "title": "Como usuario, quiero recibir notificaciones sobre eventos importantes",
+      "title": "owoowwoo",
       "description": "Necesito recibir notificaciones para eventos como cambios en mi cuenta o actualizaciones importantes.",
       "status": "to_do",
       "epicId": 2,
-      "sprintBacklogId": 2,
-      "effort": 4,
+      "sprintBacklogId": 9,
+      "effort": "3",
       "tasks": [
         {
           "id": 7,
@@ -143,39 +108,12 @@
       ]
     },
     {
-      "id": 5,
-      "title": "Como usuario, quiero integrar mis redes sociales",
-      "description": "Necesito poder vincular mis cuentas de redes sociales para facilitar el registro y la autenticación.",
-      "status": "to_do",
-      "epicId": 4,
-      "sprintBacklogId": 4,
-      "effort": 6,
-      "tasks": [
-        {
-          "id": 9,
-          "title": "Diseñar flujo de autenticación social",
-          "description": "Crear el diseño para el flujo de autenticación a través de redes sociales.",
-          "status": "to_do",
-          "estimation": 4,
-          "userStoryId": 5
-        },
-        {
-          "id": 10,
-          "title": "Implementar lógica de autenticación social",
-          "description": "Desarrollar la lógica del backend para permitir el inicio de sesión a través de redes sociales.",
-          "status": "to_do",
-          "estimation": 6,
-          "userStoryId": 5
-        }
-      ]
-    },
-    {
       "id": 6,
       "title": "Como usuario, quiero ver un historial de mis actividades",
       "description": "Necesito poder revisar un historial de mis actividades y cambios realizados en mi cuenta.",
       "status": "to_do",
       "epicId": 3,
-      "sprintBacklogId": 3,
+      "sprintBacklogId": 9,
       "effort": 5,
       "tasks": [
         {
@@ -195,6 +133,16 @@
           "userStoryId": 6
         }
       ]
+    },
+    {
+      "id": 7,
+      "title": "user eso",
+      "description": "esoso",
+      "status": "to_do",
+      "epicId": 1,
+      "sprintBacklogId": 10,
+      "effort": "5",
+      "tasks": []
     }
   ],
   "epics": [
@@ -214,12 +162,6 @@
       "id": 3,
       "title": "Mejoras de rendimiento",
       "description": "Realizar optimizaciones en la aplicación para mejorar la velocidad y eficiencia.",
-      "status": "to_do"
-    },
-    {
-      "id": 4,
-      "title": "Funcionalidades sociales",
-      "description": "Implementar características que permitan la integración con redes sociales y compartir contenido.",
       "status": "to_do"
     }
   ],

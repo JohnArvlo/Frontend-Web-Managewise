@@ -21,7 +21,8 @@ import { MatIcon } from "@angular/material/icon";
 
 import { UserStoryCreateAndEditComponent } from "../user-story-create-and-edit/user-story-create-and-edit.component";
 import { TaskCreateAndEditComponent } from "../task-create-and-edit/task-create-and-edit.component"; // Importa el componente para tareas
-import { EpicCreateAndEditComponent } from "../epic-create-and-edit/epic-create-and-edit.component"; // Importa el componente para épicos
+import { EpicCreateAndEditComponent } from "../epic-create-and-edit/epic-create-and-edit.component";
+import {Sprint} from "../../model/sprint.entity"; // Importa el componente para épicos
 
 @Component({
   selector: 'app-backlog-items-management',
@@ -88,13 +89,12 @@ export class BacklogItemsManagementComponent {
       });
   }
 
-  /*
-  private deleteTask(taskId: number): void {
-    this.tasksService.delete(taskId)
+  private deleteTask(userStoryId: number, taskId: number): void {
+    this.userStoriesService.deleteTask(userStoryId, taskId)
       .subscribe(() => {
-        this.tasks = this.tasks.filter((task: Task) => task.id !== taskId);
+        this.getAllUserStories();
       });
-  }*/
+  }
 
   //formularios
   openAddUserStoryForm(): void {
@@ -178,10 +178,10 @@ export class BacklogItemsManagementComponent {
     this.deleteEpic(element.id);
   }
 
-  /*
+
   onDeleteTask(element: Task) {
-    this.deleteTask(element.id);
-  }*/
+    this.deleteTask(element.userStoryId, element.id);
+  }
 
   //mostrar us, epic o task dependiendo de vista
   showItem(item: string){

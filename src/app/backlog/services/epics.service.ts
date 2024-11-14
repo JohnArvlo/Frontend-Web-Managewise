@@ -3,12 +3,13 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http
 import { catchError, Observable, retry, throwError } from "rxjs";
 
 import { Epic } from "../model/epic.entity";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class EpicsService {
-  basePath: string = 'https://my-json-server.typicode.com/JohnArvlo/db-backlog';
+  basePath: string = `${environment.serverBasePath}`; //'https://my-json-server.typicode.com/JohnArvlo/db-backlog';
   resourceEndpoint: string = '/epics';
 
   httpOptions = {
