@@ -10,7 +10,8 @@ import {environment} from "../../../environments/environment";
   providedIn: 'root'
 })
 export class UserStoriesService {
-  basePath: string =  `${environment.serverBasePath}`; //'https://my-json-server.typicode.com/JohnArvlo/db-backlog';
+  basePath: string = // `${environment.serverBasePath}`;
+  'https://my-json-server.typicode.com/JohnArvlo/db-backlog';
   resourceEndpoint: string = '/userStories';
 
   httpOptions = {

@@ -8,7 +8,8 @@ import {environment} from "../../../environments/environment";
   providedIn: 'root'
 })
 export class SprintService {
-  basePath: string = `${environment.serverBasePath}`; //'https://my-json-server.typicode.com/JohnArvlo/db-backlog';
+  basePath: string = //`${environment.serverBasePath}`; //
+   'https://my-json-server.typicode.com/JohnArvlo/db-backlog';
   resourceEndpoint: string = '/sprints';
 
   httpOptions = {
