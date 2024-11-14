@@ -4,12 +4,14 @@ import { catchError, Observable, retry, throwError } from 'rxjs';
 
 import { Task } from '../model/task.entity';
 import { UserStory } from '../model/user-story.entity';
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserStoriesService {
-  basePath: string = 'https://my-json-server.typicode.com/JohnArvlo/db-backlog';
+  basePath: string = // `${environment.serverBasePath}`;
+  'https://my-json-server.typicode.com/JohnArvlo/db-backlog';
   resourceEndpoint: string = '/userStories';
 
   httpOptions = {
@@ -70,6 +72,17 @@ export class UserStoriesService {
     return this.http.put(
       `${this.resourcePath()}/${userStoryId}/tasks/${taskId}`,
       updatedData,
+      this.httpOptions
+    ).pipe(
+      retry(2),
+      catchError(this.handleError)
+    );
+  }
+
+  //eliminar task
+  deleteTask(userStoryId: number, taskId: number): Observable<any> {
+    return this.http.delete(
+      `${this.resourcePath()}/${userStoryId}/tasks/${taskId}`,
       this.httpOptions
     ).pipe(
       retry(2),

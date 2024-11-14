@@ -1,7 +1,7 @@
 export class Sprint {
   id: number;
   title: string;
-  goal: number;
+  goal: string;
   status: 'Active' | 'Closed';
   startDate: Date;
   endDate: Date;
@@ -9,7 +9,7 @@ export class Sprint {
   constructor(
     id: number,
     title: string,
-    goal: number,
+    goal: string,
     status: 'Active' | 'Closed' = 'Active',
     startDate: Date,
     endDate: Date

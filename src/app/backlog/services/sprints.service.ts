@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { catchError, map, Observable, retry, throwError } from 'rxjs';
 import { Sprint } from '../model/sprint.entity';
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SprintService {
-  basePath: string = 'https://my-json-server.typicode.com/JohnArvlo/db-backlog';
+  basePath: string = //`${environment.serverBasePath}`; //
+   'https://my-json-server.typicode.com/JohnArvlo/db-backlog';
   resourceEndpoint: string = '/sprints';
 
   httpOptions = {
@@ -71,4 +73,6 @@ export class SprintService {
   private resourcePath(): string {
     return `${this.basePath}${this.resourceEndpoint}`;
   }
+
+
 }

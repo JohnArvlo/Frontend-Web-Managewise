@@ -25,9 +25,10 @@ export class ProductBacklogComponent {
 
   productBacklog: Array<UserStory> = [];
   sprintBacklog: Array<UserStory> = [];
+  usersprints: Array<UserStory> = [];
 
   sprints: Array<Sprint> = [];
-  newSprint: Sprint = new Sprint(0, '', 0, 'Active', new Date(), new Date());
+  newSprint: Sprint = new Sprint(0, '', '', 'Active', new Date(), new Date());
 
   constructor(private userStoriesService: UserStoriesService,
               private sprintsService: SprintService) {}
@@ -37,7 +38,8 @@ export class ProductBacklogComponent {
     this.userStoriesService.getAll()
       .subscribe((response: any) => {
         this.productBacklog = response.filter((story: UserStory) => story.sprintBacklogId == null);
-        this.sprintBacklog = response.filter((story: UserStory) => story.sprintBacklogId != null);
+        //this.sprintBacklog = response.filter((story: UserStory) => story.sprintBacklogId != null);
+        this.usersprints = response;
       });
   }
 
@@ -53,8 +55,19 @@ export class ProductBacklogComponent {
   createSprint(): void {
     this.sprintsService.create(this.newSprint).subscribe((sprint: Sprint) => {
       console.log('Sprint creado:', sprint);
-      // Aquí puedes agregar lógica para actualizar el sprintBacklog si es necesario
+      this.sprintBacklog.forEach(userStory => {
+        userStory.sprintBacklogId = sprint.id;
+        this.userStoriesService.update(userStory.id, userStory).subscribe(
+          (updatedUserStory: UserStory) => {
+            console.log('User story actualizada:', updatedUserStory);
+          },
+          (error) => {
+            console.error('Error al actualizar la user story:', error);
+          }
+        );
+      });
       this.resetSprintForm(); // Restablecer el formulario después de crear el sprint
+      this.getAllSprints();
     }, (error) => {
       console.error('Error al crear el sprint:', error);
     });
@@ -62,7 +75,7 @@ export class ProductBacklogComponent {
 
   // Metodo para restablecer el formulario
   private resetSprintForm(): void {
-    this.newSprint = new Sprint(0, '', 0, 'Active', new Date(), new Date());
+    this.newSprint = new Sprint(0, '', '', 'Active', new Date(), new Date());
   }
 
 
@@ -81,6 +94,27 @@ export class ProductBacklogComponent {
     // Agregar al sprintBacklog
     this.sprintBacklog.push(element);
   }
+
+  closeSprint(sprint: Sprint) {
+    sprint.status = 'Closed';
+    this.sprintsService.update(sprint.id, sprint).subscribe(
+      (updatedSprint: Sprint) => {
+        console.log('Sprint actualizado:', updatedSprint);
+        this.sprintBacklog = this.sprintBacklog.filter(userStory => userStory.sprintBacklogId !== sprint.id);
+      },
+      (error) => {
+        console.error('Error al actualizar el sprint:', error);
+      }
+    );
+  }
+
+  isSprintActive(): boolean {
+    if (this.sprints.find(sprint => sprint.status === 'Active')) {
+      return true;
+    }
+    return false;
+  }
+
 
   ngOnInit(): void {
     this.getAllUserStories();
