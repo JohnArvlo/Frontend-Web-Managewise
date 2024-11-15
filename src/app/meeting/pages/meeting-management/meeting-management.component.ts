@@ -59,9 +59,23 @@ export class MeetingManagementComponent implements OnInit {
   private getAllResources(): void {
     this.meetingService.getAll()
       .subscribe((response: any) => {
-        this.meeting = response;
+        this.meeting = response.map((item: Meeting) => {
+          return {
+            ...item,
+            dateStr: this.parseDate(item.dateStr)  // Convertir dateStr a objeto Date
+          };
+        });
       });
-  };
+  }
+
+  private parseDate(dateStr: string): Date | null {
+    const date = new Date(dateStr);
+    return isNaN(date.getTime()) ? null : date;
+  }
+
+
+
+
 
   private createResource(): void {
     this.meetingService.create(this.meetingData)
