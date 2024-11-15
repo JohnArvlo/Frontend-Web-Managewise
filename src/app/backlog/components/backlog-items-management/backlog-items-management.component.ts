@@ -36,6 +36,8 @@ export class BacklogItemsManagementComponent {
   tasks: Array<Task> = [];
   epics: Array<Epic> = [];
   backogItem: string = 'userStories';
+  showtasklist: { [key: number]: boolean } = {};
+  showUserStoriesList: { [key: number]: boolean } = {};
 
   constructor(
     private userStoriesService: UserStoriesService,
@@ -53,19 +55,6 @@ export class BacklogItemsManagementComponent {
         this.tasks = this.userStories.flatMap(userStory => userStory.tasks);
       });
   }
-
-  // Metodo para obtener las tareas de una historia de usuario específica
-  getTasksByUserStoryId(userStoryId: number): Task[] {
-    return this.tasks.filter(task => task.userStoryId === userStoryId);
-  }
-
-
-  /*private getAllTasks(): void {
-    this.tasksService.getAll()
-      .subscribe((response: any) => {
-        this.tasks = response;
-      });
-  }*/
 
   private getAllEpics(): void {
     this.epicsService.getAll()
@@ -108,6 +97,12 @@ export class BacklogItemsManagementComponent {
     });
   }
 
+  removeEpicFromUserStory(userStory: UserStory): void {
+    userStory.epicId = 0;
+    this.userStoriesService.update(userStory.id, userStory).subscribe(() => {
+      this.getAllUserStories();
+    });
+  }
 
   openEditUserStoryForm(us: UserStory): void {
     const dialogRef = this.dialog.open(UserStoryCreateAndEditComponent, {
@@ -121,10 +116,13 @@ export class BacklogItemsManagementComponent {
     });
   }
 
+
   // Tareas: agregar y editar
-  openAddTaskForm(): void {
+  openAddTaskForm(us: number): void {
+    const task= new Task(0, '', '', 'TO_DO', 0);
     const dialogRef = this.dialog.open(TaskCreateAndEditComponent, {
-      width: '400px'
+      width: '400px',
+      data: {us, task}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -133,10 +131,10 @@ export class BacklogItemsManagementComponent {
     });
   }
 
-  openEditTaskForm(task: Task): void {
+  openEditTaskForm(us: number, task: Task): void {
     const dialogRef = this.dialog.open(TaskCreateAndEditComponent, {
       width: '400px',
-      data: task  // Pasamos la tarea actual para editarla
+      data: {us, task}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -169,6 +167,14 @@ export class BacklogItemsManagementComponent {
     });
   }
 
+  showtasks(userStoryId: number): void {
+    this.showtasklist[userStoryId] = !this.showtasklist[userStoryId];
+  }
+
+  showUserStories(epicId: number): void {
+    this.showUserStoriesList[epicId] = !this.showUserStoriesList[epicId];
+  }
+
   //delete
   onDeleteUserStory(element: UserStory) {
     this.deleteUserStory(element.id);
@@ -179,8 +185,8 @@ export class BacklogItemsManagementComponent {
   }
 
 
-  onDeleteTask(element: Task) {
-    this.deleteTask(element.userStoryId, element.id);
+  onDeleteTask(usId: number, element: Task) {
+    this.deleteTask(usId, element.taskId);
   }
 
   //mostrar us, epic o task dependiendo de vista

@@ -9,7 +9,8 @@ import {environment} from "../../../environments/environment";
 })
 export class SprintService {
   basePath: string = //`${environment.serverBasePath}`; //
-   'https://my-json-server.typicode.com/JohnArvlo/db-backlog';
+  // 'https://my-json-server.typicode.com/JohnArvlo/db-backlog';
+    'http://localhost:8090/api/v1';
   resourceEndpoint: string = '/sprints';
 
   httpOptions = {
@@ -58,14 +59,14 @@ export class SprintService {
     return this.http.get<Sprint[]>(this.resourcePath(), this.httpOptions).pipe(
       retry(2),
       catchError(this.handleError),
-      map((sprints: Sprint[]) => sprints.find(sprint => sprint.status === 'Active') || null)
+      map((sprints: Sprint[]) => sprints.find(sprint => sprint.status === 'STARTED') || null)
     );
   }
 
   // Verificar si hay un Sprint activo
   hasActiveSprint(): Observable<boolean> {
     return this.http.get<Sprint[]>(this.resourcePath(), this.httpOptions).pipe(
-      map((sprints: Sprint[]) => sprints.some(sprint => sprint.status === 'Active')),
+      map((sprints: Sprint[]) => sprints.some(sprint => sprint.status === 'STARTED')),
       catchError(this.handleError)
     );
   }

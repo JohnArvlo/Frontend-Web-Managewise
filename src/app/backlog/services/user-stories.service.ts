@@ -11,8 +11,9 @@ import {environment} from "../../../environments/environment";
 })
 export class UserStoriesService {
   basePath: string = // `${environment.serverBasePath}`;
-  'https://my-json-server.typicode.com/JohnArvlo/db-backlog';
-  resourceEndpoint: string = '/userStories';
+  //'https://my-json-server.typicode.com/JohnArvlo/db-backlog';
+  'http://localhost:8090/api/v1';
+  resourceEndpoint: string = '/user-stories';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -33,6 +34,7 @@ export class UserStoriesService {
 
   // Crear recurso
   create(item: any): Observable<UserStory> {
+    item.sprintId= 0;
     return this.http.post<UserStory>(this.resourcePath(), item, this.httpOptions)
       .pipe(retry(2), catchError(this.handleError));
   }

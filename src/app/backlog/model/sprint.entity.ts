@@ -2,7 +2,7 @@ export class Sprint {
   id: number;
   title: string;
   goal: string;
-  status: 'Active' | 'Closed';
+  status: 'STARTED' | 'FINISHED';
   startDate: Date;
   endDate: Date;
 
@@ -10,7 +10,7 @@ export class Sprint {
     id: number,
     title: string,
     goal: string,
-    status: 'Active' | 'Closed' = 'Active',
+    status: 'STARTED' | 'FINISHED' = 'STARTED',
     startDate: Date,
     endDate: Date
   ) {
