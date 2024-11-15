@@ -36,6 +36,8 @@ export class BacklogItemsManagementComponent {
   tasks: Array<Task> = [];
   epics: Array<Epic> = [];
   backogItem: string = 'userStories';
+  showtasklist: { [key: number]: boolean } = {};
+  showUserStoriesList: { [key: number]: boolean } = {};
 
   constructor(
     private userStoriesService: UserStoriesService,
@@ -53,13 +55,6 @@ export class BacklogItemsManagementComponent {
         this.tasks = this.userStories.flatMap(userStory => userStory.tasks);
       });
   }
-
-  /*private getAllTasks(): void {
-    this.tasksService.getAll()
-      .subscribe((response: any) => {
-        this.tasks = response;
-      });
-  }*/
 
   private getAllEpics(): void {
     this.epicsService.getAll()
@@ -102,6 +97,12 @@ export class BacklogItemsManagementComponent {
     });
   }
 
+  removeEpicFromUserStory(userStory: UserStory): void {
+    userStory.epicId = 0;
+    this.userStoriesService.update(userStory.id, userStory).subscribe(() => {
+      this.getAllUserStories();
+    });
+  }
 
   openEditUserStoryForm(us: UserStory): void {
     const dialogRef = this.dialog.open(UserStoryCreateAndEditComponent, {
@@ -117,10 +118,11 @@ export class BacklogItemsManagementComponent {
 
 
   // Tareas: agregar y editar
-  openAddTaskForm(us: UserStory): void {
+  openAddTaskForm(us: number): void {
+    const task= new Task(0, '', '', 'TO_DO', 0);
     const dialogRef = this.dialog.open(TaskCreateAndEditComponent, {
       width: '400px',
-      data: us
+      data: {us, task}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -129,14 +131,14 @@ export class BacklogItemsManagementComponent {
     });
   }
 
-  openEditTaskForm(task: Task, us:UserStory): void {
+  openEditTaskForm(us: number, task: Task): void {
     const dialogRef = this.dialog.open(TaskCreateAndEditComponent, {
       width: '400px',
-      data: {task, us}
+      data: {us, task}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.getAllUserStories();
+        this.getAllUserStories();  // Recargamos la lista de tareas
       }
     });
   }
@@ -163,6 +165,14 @@ export class BacklogItemsManagementComponent {
         this.getAllEpics();  // Recargamos la lista de épicos
       }
     });
+  }
+
+  showtasks(userStoryId: number): void {
+    this.showtasklist[userStoryId] = !this.showtasklist[userStoryId];
+  }
+
+  showUserStories(epicId: number): void {
+    this.showUserStoriesList[epicId] = !this.showUserStoriesList[epicId];
   }
 
   //delete

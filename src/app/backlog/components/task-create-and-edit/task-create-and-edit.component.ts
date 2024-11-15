@@ -20,34 +20,37 @@ import {UserStory} from "../../model/user-story.entity";
 })
 export class TaskCreateAndEditComponent {
   newTask: Task;
-  newUserStory: UserStory;
+  newUserStory: number;
 
   constructor(
     private userStoryService: UserStoriesService,
     private dialog: MatDialog,
     private dialogRef: MatDialogRef<TaskCreateAndEditComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { task: Task, userStory: UserStory }
+    @Inject(MAT_DIALOG_DATA) public data: { us: number, task: Task }
   ) {
     this.newTask = data.task ? { ...data.task } : new Task(0, '', '', 'TO_DO', 0);
-    this.newUserStory = data.userStory;
+    this.newUserStory = data.us;
+    console.log('us:', this.newUserStory);
   }
 
   onSubmit(): void {
+    //console.log('Form Data:', this.newTask);
+    //console.log('Form Data:', this.newUserStory.id);
+
     if (this.newTask.taskId) {
-      this.userStoryService.updateTask(this.newUserStory.id, this.newTask.taskId, this.newTask).subscribe(() => {
+      this.userStoryService.updateTask(this.newUserStory, this.newTask.taskId, this.newTask).subscribe(() => {
         this.dialogRef.close(true);
       }, error => {
-        console.error("Error al actualizar la tarea", error);
+        console.error("Error updating task", error);
       });
     } else {
-      this.userStoryService.addTask(this.newUserStory.id, this.newTask).subscribe(() => {
+      this.userStoryService.addTask(this.newUserStory, this.newTask).subscribe(() => {
         this.dialogRef.close(true);
       }, error => {
-        console.error("Error al agregar la tarea", error);
+        console.error("Error adding task", error);
       });
     }
   }
-
 
   onCancel(): void {
     this.dialogRef.close(false);

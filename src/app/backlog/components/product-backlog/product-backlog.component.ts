@@ -52,7 +52,6 @@ export class ProductBacklogComponent {
 
   // Metodo para crear un nuevo Sprint
   createSprint(): void {
-
     const formattedSprint = {
       ...this.newSprint,
       startDate: formatDate(this.newSprint.startDate, 'yyyy-MM-ddTHH:mm:ss.SSSZ', 'en-US'),
@@ -108,6 +107,7 @@ export class ProductBacklogComponent {
     this.sprintBacklog.push(element);
   }
 
+
   closeSprint(sprint: Sprint) {
     sprint.status = 'FINISHED';
     const formattedSprint = {
@@ -118,6 +118,23 @@ export class ProductBacklogComponent {
     this.sprintsService.update(sprint.id, sprint).subscribe(
       (updatedSprint: Sprint) => {
         console.log('Sprint actualizado:', updatedSprint);
+        this.sprintBacklog.forEach(userStory => {
+          if (userStory.sprintId === sprint.id) {
+            userStory.status = "DONE";
+            const updatedUserStory = {
+              ...userStory,
+              status: "DONE"
+            };
+            this.userStoriesService.update(userStory.id, updatedUserStory).subscribe(
+              (updatedUserStory: UserStory) => {
+                console.log('User story actualizada:', updatedUserStory);
+              },
+              (error) => {
+                console.error('Error al actualizar la user story:', error);
+              }
+            );
+          }
+        });
         this.sprintBacklog = this.sprintBacklog.filter(userStory => userStory.sprintId !== sprint.id);
       },
       (error) => {

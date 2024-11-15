@@ -19,7 +19,7 @@
       <h6>Sprint #{{sprint.id}}</h6> <br>
       <h6>{{sprint.title}}</h6>
       <h6>{{sprint.goal}}</h6>
-      <h6>{{sprint.endDate}}</h6>
+      <h6>{{ sprint.endDate | date:'dd/MM/yyyy' }}</h6>
       <button class="sprint-button" mat-raised-button (click)="closeSprint(sprint)">Close Sprint</button>
     </div>
     <div *ngFor="let userStory of usersprints">
@@ -27,8 +27,7 @@
         <div class="us-container">
           <span>US{{ userStory.id }}</span>
           <span>{{ userStory.title }}</span>
-          <span>{{ userStory.status }}</span>
-          <button class="delete-button" (click)="onDeleteUserStory(userStory)"><mat-icon>delete</mat-icon></button>
+          <span>{{ userStory.description }}</span>
         </div>
       </mat-card>
     </div>
@@ -51,10 +50,10 @@
         <mat-label>Description</mat-label>
         <input matInput [(ngModel)]="newSprint.goal" name="description" required>
       </mat-form-field>
-      <mat-form-field>
+      <!--<mat-form-field>
         <mat-label>Start Date</mat-label>
         <input matInput [(ngModel)]="newSprint.startDate" name="startDate" type="date" required>
-      </mat-form-field>
+      </mat-form-field>-->
       <mat-form-field>
         <mat-label>End Date</mat-label>
         <input matInput [(ngModel)]="newSprint.endDate" name="endDate" type="date" required>
