@@ -89,5 +89,16 @@
   "startDateHeader": "Fecha de Inicio",
   "endDateHeader": "Fecha de Fin",
   "effortHeader": "Esfuerzo",
-  "UserStory": "Historia de Usuario"
+  "UserStory": "Historia de Usuario",
+  "projectTeamTitle": "Equipo del proyecto",
+  "addMemberButton": "Agregar nuevo miembro al proyecto",
+  "nameLabel": "Nombre:",
+  "roleLabel": "Rol:",
+  "emailLabel": "Correo Electrónico:",
+  "addressLabel": "Dirección:",
+  "addressNotAvailable": "Dirección no disponible",
+  "editButton": "Editar",
+  "deleteButton": "Eliminar"
+
+
 }

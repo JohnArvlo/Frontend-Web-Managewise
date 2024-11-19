@@ -90,5 +90,15 @@
   "startDateHeader": "Start Date",
   "endDateHeader": "End Date",
   "effortHeader": "Effort",
-  "UserStory": "User Story"
+  "UserStory": "User Story",
+  "projectTeamTitle": "Project Team",
+  "addMemberButton": "Add a New Member to the Project",
+  "nameLabel": "Name:",
+  "roleLabel": "Role:",
+  "emailLabel": "Email:",
+  "addressLabel": "Address:",
+  "addressNotAvailable": "Address not available",
+  "editButton": "Edit",
+  "deleteButton": "Delete"
+
 }
