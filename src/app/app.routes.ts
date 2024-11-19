@@ -1,5 +1,4 @@
   import { Routes } from '@angular/router';
-  import { StatisticsPageComponent } from './statistic/pages/statistics-page/statistics-page.component'; // Importa el componente de estadísticas
   import { PageNotFoundComponent } from "./public/pages/page-not-found/page-not-found.component";
   import { TimelinePageComponent } from './statistic/pages/timeline-page/timeline-page.component'; // Cambia TimeLine a Timeline
   import { BacklogPageComponent } from './backlog/pages/backlog-page/backlog-page.component';
@@ -14,8 +13,7 @@ import { SignUpComponent } from './iam/pages/sign-up/sign-up.component';
 import {authenticationGuard} from './iam/services/authentication.guard';
 import {AuthenticationSectionComponent} from './iam/components/authentication-section/authentication-section.component'
   export const routes: Routes = [
-    { path: 'statistics', component: StatisticsPageComponent, canActivate: [authenticationGuard] },
-    { path: 'timeline', component: TimelinePageComponent, canActivate: [authenticationGuard] },
+    { path: 'statistics', component: TimelinePageComponent, canActivate: [authenticationGuard] },
     { path: 'backlog', component: BacklogPageComponent, canActivate: [authenticationGuard] },
     { path: 'backlog-items', component: BacklogItemsPageComponent, canActivate: [authenticationGuard] },
     { path: 'members', component: MemberManagementComponent, canActivate: [authenticationGuard] },
