@@ -22,12 +22,12 @@ import {AuthenticationSectionComponent} from './iam/components/authentication-se
     { path: 'meeting', component: MeetingManagementComponent, canActivate: [authenticationGuard] },
     { path: 'issues', component: IssuesListComponent,canActivate: [authenticationGuard] },
 
-    { path: 'recording', component: RecordingManagementComponent },
+    { path: 'recording', component: RecordingManagementComponent ,canActivate: [authenticationGuard]},
     { path: '', component: PageNotFoundComponent },
      // Asegúrate de que esta ruta esté definida
     { path: 'sign-in', component: SignInComponent },
     { path: 'sign-up', component: SignUpComponent },
-    { path: '**', component: PageNotFoundComponent }
+    { path: '**', component: BacklogPageComponent}
   ];
 
 
