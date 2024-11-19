@@ -126,7 +126,6 @@
 
 .open-link-button {
   background-color: #222222;
-  color: ;
   border: none;
   border-radius: 6px;
   padding: 10px 20px;
@@ -174,4 +173,5 @@
   .card {
     width: calc(100% - 20px);
 
+  }
 }

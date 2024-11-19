@@ -157,6 +157,7 @@
   "addHistoryEventTitle": "Add History Event",
   "eventName": "Event Name",
   "closeissue": "Close Issue Details",
+  "close": "Close sprint",
 
   "MEETING": "Meeting",
   "CREATE_NEW_MEETING": "Create New Meeting",
