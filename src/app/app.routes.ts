@@ -15,11 +15,11 @@ import {AuthenticationSectionComponent} from './iam/components/authentication-se
     { path: 'statistics', component: TimelinePageComponent },
     { path: 'backlog', component: BacklogPageComponent, canActivate: [authenticationGuard] },
     { path: 'backlog-items', component: BacklogItemsPageComponent, canActivate: [authenticationGuard] },
-    { path: 'members', component: MemberManagementComponent },
+    { path: 'members', component: MemberManagementComponent ,canActivate: [authenticationGuard]},
     { path: 'meeting', component: MeetingManagementComponent, canActivate: [authenticationGuard] },
     { path: 'issues', component: IssuesListComponent,canActivate: [authenticationGuard] },
 
-    { path: 'recording', component: RecordingManagementComponent ,canActivate: [authenticationGuard]},
+    { path: 'recording', component: RecordingManagementComponent},
     { path: '', component: PageNotFoundComponent },
      // Asegúrate de que esta ruta esté definida
     { path: 'sign-in', component: SignInComponent },
